@@ -9,13 +9,13 @@ export const personalInfo: PersonalInfo = {
   ],
   email: 'orlaa24ad@pm.me',
   location: 'Elzach, Alemania / Málaga, España',
-  resumeUrl: '/cv-orlando-es.pdf',
+  resumeUrl: '/CV_español.pdf',
 }
 
 export const resumes: Record<string, string> = {
-  es: '/cv-orlando-es.pdf',
-  en: '/cv-orlando-en.pdf',
-  de: '/cv-orlando-de.pdf',
+  es: '/CV_español.pdf',
+  en: '/CV_english.pdf',
+  de: '/CV_deutsch.pdf',
 }
 
 export const navLinks: NavLink[] = [
