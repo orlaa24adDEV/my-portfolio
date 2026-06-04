@@ -138,6 +138,7 @@ export function Skills() {
     let asteroids = createAsteroids()
     let animId: number
     let categoryTimer: ReturnType<typeof setTimeout> | null = null
+    let switching = false
 
     const render = () => {
       if (paused) {
@@ -254,11 +255,13 @@ export function Skills() {
         }
       }
 
-      if (remaining === 0 && !allLanded) {
+      if (remaining === 0 && !allLanded && !switching) {
+        switching = true
         currentCategoryIdx++
         if (currentCategoryIdx < categoryOrder.length) {
           categoryTimer = setTimeout(() => {
             asteroids = createAsteroids()
+            switching = false
           }, 600)
         } else {
           allLanded = true
