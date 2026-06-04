@@ -13,27 +13,23 @@ export function Contact() {
     setCvLang(i18n.language)
   }, [i18n.language])
 
-  useEffect(() => {
-    emailjs.init({ publicKey: import.meta.env.VITE_EMAILJS_PUBLIC_KEY })
-  }, [])
-
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     if (!formRef.current) return
 
-    emailjs
-      .sendForm(
-        import.meta.env.VITE_EMAILJS_SERVICE_ID,
-        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
-        formRef.current,
-      )
+    const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID
+    const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID
+    const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+
+    emailjs.sendForm(serviceId, templateId, formRef.current, { publicKey })
       .then(() => {
         setSent(true)
         formRef.current?.reset()
       })
       .catch((err) => {
         console.error('EmailJS error:', err)
-        alert(t('contact.error') + ' (' + (err.text || err.message) + ')')
+        const msg = err?.text || err?.message || 'Error desconocido'
+        alert(t('contact.error') + ' (' + msg + ')')
       })
   }
 
