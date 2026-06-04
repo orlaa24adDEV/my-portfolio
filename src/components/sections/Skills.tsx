@@ -74,7 +74,9 @@ export function Skills() {
 
     let paused = false
     let allLanded = false
-    const speed = 6
+    const speed = 4
+    let currentCategoryIdx = 0
+    const categoryOrder = ['frontend', 'backend', 'tools', 'design']
 
     const visibilityObserver = new IntersectionObserver(
       ([entry]) => { paused = !entry.isIntersecting },
@@ -103,31 +105,39 @@ export function Skills() {
       done: boolean
     }
 
-    const asteroids: Asteroid[] = allSkillsSorted.map((skill) => {
-      const side = Math.floor(Math.random() * 4)
-      const t = Math.random()
-      let startX: number, startY: number
-      if (side === 0) { startX = -100; startY = t * window.innerHeight }
-      else if (side === 1) { startX = window.innerWidth + 100; startY = t * window.innerHeight }
-      else if (side === 2) { startX = t * window.innerWidth; startY = -100 }
-      else { startX = t * window.innerWidth; startY = window.innerHeight + 100 }
+    const createAsteroids = (): Asteroid[] => {
+      const cat = categoryOrder[currentCategoryIdx]
+      const catSkills = allSkillsSorted.filter((s) => s.category === cat)
+      if (catSkills.length === 0) return []
 
-      return {
-        skill,
-        startX,
-        startY,
-        z: MAX_Z,
-        rot: 0,
-        trail: [],
-        impacted: false,
-        impactTime: 0,
-        impactX: 0,
-        impactY: 0,
-        done: false,
-      }
-    })
+      return catSkills.map((skill) => {
+        const side = Math.floor(Math.random() * 4)
+        const t = Math.random()
+        let startX: number, startY: number
+        if (side === 0) { startX = -100; startY = t * window.innerHeight }
+        else if (side === 1) { startX = window.innerWidth + 100; startY = t * window.innerHeight }
+        else if (side === 2) { startX = t * window.innerWidth; startY = -100 }
+        else { startX = t * window.innerWidth; startY = window.innerHeight + 100 }
 
+        return {
+          skill,
+          startX,
+          startY,
+          z: MAX_Z,
+          rot: 0,
+          trail: [],
+          impacted: false,
+          impactTime: 0,
+          impactX: 0,
+          impactY: 0,
+          done: false,
+        }
+      })
+    }
+
+    let asteroids = createAsteroids()
     let animId: number
+    let categoryTimer: ReturnType<typeof setTimeout> | null = null
 
     const render = () => {
       if (paused) {
@@ -244,8 +254,15 @@ export function Skills() {
         }
       }
 
-      if (remaining === 0) {
-        allLanded = true
+      if (remaining === 0 && !allLanded) {
+        currentCategoryIdx++
+        if (currentCategoryIdx < categoryOrder.length) {
+          categoryTimer = setTimeout(() => {
+            asteroids = createAsteroids()
+          }, 600)
+        } else {
+          allLanded = true
+        }
       }
 
       animId = requestAnimationFrame(render)
@@ -257,6 +274,7 @@ export function Skills() {
       cancelAnimationFrame(animId)
       visibilityObserver.disconnect()
       window.removeEventListener('resize', resize)
+      if (categoryTimer) clearTimeout(categoryTimer)
     }
   }, [phase])
 
