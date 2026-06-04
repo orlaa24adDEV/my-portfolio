@@ -13,6 +13,10 @@ export function Contact() {
     setCvLang(i18n.language)
   }, [i18n.language])
 
+  useEffect(() => {
+    emailjs.init(import.meta.env.VITE_EMAILJS_PUBLIC_KEY)
+  }, [])
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     if (!formRef.current) return
@@ -28,8 +32,9 @@ export function Contact() {
         setSent(true)
         formRef.current?.reset()
       })
-      .catch(() => {
-        alert(t('contact.error'))
+      .catch((err) => {
+        console.error('EmailJS error:', err)
+        alert(t('contact.error') + ' (' + (err.text || err.message) + ')')
       })
   }
 
