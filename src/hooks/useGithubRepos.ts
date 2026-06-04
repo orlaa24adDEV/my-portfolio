@@ -25,12 +25,16 @@ export function useGithubRepos(username: string) {
           'VisitasVirtuales': ['React', 'JavaScript', 'PostgreSQL', 'API Rest', 'Docker', 'Tailwind', 'HTML'],
         }
 
+        const urlOverrides: Record<string, string> = {
+          'VisitasVirtuales': 'https://visitasvirtuales.dedyn.io/',
+        }
+
         const mapped: Project[] = data.map((r) => ({
             id: String(r.id),
             title: r.name,
             description: r.description ?? 'Sin descripción',
             technologies: techOverrides[r.name] ?? ([r.language, ...r.topics].filter(Boolean) as string[]),
-            liveUrl: r.homepage ?? undefined,
+            liveUrl: urlOverrides[r.name] ?? r.homepage ?? undefined,
             repoUrl: r.html_url,
             featured: true,
           }))
