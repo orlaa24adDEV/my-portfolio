@@ -37,19 +37,3 @@ export interface NavLink {
   label: string
   href: string
 }
-
-export interface Experience {
-  company: string
-  role: string
-  period: string
-  description: string
-  highlights: string[]
-}
-
-export interface Testimonial {
-  name: string
-  role: string
-  company: string
-  content: string
-  avatar?: string
-}
