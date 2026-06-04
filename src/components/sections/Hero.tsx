@@ -15,15 +15,9 @@ export function Hero() {
       <p className="text-lg sm:text-xl md:text-2xl mb-2">
         {t('hero.title')}
       </p>
-      <p className="text-sm sm:text-lg mb-8 max-w-md opacity-80 px-2">
+      <p className="text-sm sm:text-lg max-w-md opacity-80 px-2">
         {t('hero.tagline')}
       </p>
-      <a
-        href="#about"
-        className="inline-block px-8 py-3 border border-primary rounded-full hover:bg-primary/10 transition-colors"
-      >
-        {t('hero.cta')}
-      </a>
     </section>
   )
 }
