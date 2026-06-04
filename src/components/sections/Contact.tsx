@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import emailjs from '@emailjs/browser'
 import { personalInfo, socialLinks, resumes } from '../../data'
@@ -8,6 +8,10 @@ export function Contact() {
   const formRef = useRef<HTMLFormElement>(null)
   const [sent, setSent] = useState(false)
   const [cvLang, setCvLang] = useState(i18n.language)
+
+  useEffect(() => {
+    setCvLang(i18n.language)
+  }, [i18n.language])
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
@@ -92,15 +96,21 @@ export function Contact() {
       <div className="pt-4 border-t border-primary/20 text-center max-w-4xl w-full mt-10">
         <p className="text-sm opacity-60 mb-3">{t('contact.cvText')}</p>
         <div className="flex items-center justify-center gap-3">
-          <select
-            value={cvLang}
-            onChange={(e) => setCvLang(e.target.value)}
-            className="bg-transparent border border-primary/30 rounded-full px-4 py-2 text-sm text-white outline-none focus:border-primary transition-colors cursor-pointer"
-          >
-            <option value="es" className="bg-[#0a0a0f]">ES</option>
-            <option value="en" className="bg-[#0a0a0f]">EN</option>
-            <option value="de" className="bg-[#0a0a0f]">DE</option>
-          </select>
+          <div className="flex gap-1 border border-primary/30 rounded-full px-2 py-1">
+            {[['es', 'ES'], ['en', 'EN'], ['de', 'DE']].map(([code, label]) => (
+              <button
+                key={code}
+                onClick={() => setCvLang(code)}
+                className={`text-xs px-2 py-0.5 rounded-full transition-colors ${
+                  cvLang === code
+                    ? 'bg-primary/20 text-primary'
+                    : 'opacity-60 hover:opacity-100'
+                }`}
+              >
+                {label}
+              </button>
+            ))}
+          </div>
           <a
             href={resumes[cvLang]}
             download
