@@ -74,7 +74,7 @@ export function Skills() {
 
     let paused = false
     let allLanded = false
-    const speed = 8
+    const speed = 6
 
     const visibilityObserver = new IntersectionObserver(
       ([entry]) => { paused = !entry.isIntersecting },
