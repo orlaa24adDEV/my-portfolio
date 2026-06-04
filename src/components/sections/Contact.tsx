@@ -10,6 +10,7 @@ export function Contact() {
   const [cvLang, setCvLang] = useState(i18n.language)
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setCvLang(i18n.language)
   }, [i18n.language])
 
