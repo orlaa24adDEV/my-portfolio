@@ -83,7 +83,7 @@ export function Skills() {
     let impactTime = 0
     let impactX = 0
     let impactY = 0
-    const speed = 2
+    const speed = 6
     const trail: TrailPoint[] = []
 
     const visibilityObserver = new IntersectionObserver(
@@ -133,7 +133,7 @@ export function Skills() {
       const target = getCardCenter(skill.category)
 
       if (impacting) {
-        impactTime += 0.02
+        impactTime += 0.05
         const p = Math.min(impactTime, 1)
 
         const ringRadius = 20 + 80 * p
@@ -170,7 +170,7 @@ export function Skills() {
           setLandedSkills((prev) => new Set(prev).add(skill.name))
           currentIdx++
           if (currentIdx < allSkillsSorted.length) {
-            setTimeout(launchNext, 500)
+            setTimeout(launchNext, 200)
           }
         }
 
