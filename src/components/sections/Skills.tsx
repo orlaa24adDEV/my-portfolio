@@ -72,19 +72,9 @@ export function Skills() {
     resize()
     window.addEventListener('resize', resize)
 
-    let currentIdx = 0
-    let startX = 0
-    let startY = 0
-    let z = MAX_Z
-    let rot = 0
     let paused = false
-    let waiting = false
-    let impacting = false
-    let impactTime = 0
-    let impactX = 0
-    let impactY = 0
-    const speed = 6
-    const trail: TrailPoint[] = []
+    let allLanded = false
+    const speed = 8
 
     const visibilityObserver = new IntersectionObserver(
       ([entry]) => { paused = !entry.isIntersecting },
@@ -99,18 +89,43 @@ export function Skills() {
       return { x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 }
     }
 
-    const launchNext = () => {
+    interface Asteroid {
+      skill: typeof allSkillsSorted[0]
+      startX: number
+      startY: number
+      z: number
+      rot: number
+      trail: TrailPoint[]
+      impacted: boolean
+      impactTime: number
+      impactX: number
+      impactY: number
+      done: boolean
+    }
+
+    const asteroids: Asteroid[] = allSkillsSorted.map((skill) => {
       const side = Math.floor(Math.random() * 4)
       const t = Math.random()
+      let startX: number, startY: number
       if (side === 0) { startX = -100; startY = t * window.innerHeight }
       else if (side === 1) { startX = window.innerWidth + 100; startY = t * window.innerHeight }
       else if (side === 2) { startX = t * window.innerWidth; startY = -100 }
       else { startX = t * window.innerWidth; startY = window.innerHeight + 100 }
-      z = MAX_Z
-      rot = 0
-      waiting = false
-      trail.length = 0
-    }
+
+      return {
+        skill,
+        startX,
+        startY,
+        z: MAX_Z,
+        rot: 0,
+        trail: [],
+        impacted: false,
+        impactTime: 0,
+        impactX: 0,
+        impactY: 0,
+        done: false,
+      }
+    })
 
     let animId: number
 
@@ -120,85 +135,82 @@ export function Skills() {
         return
       }
 
-      const w = canvas.width
-      const h = canvas.height
-      ctx.clearRect(0, 0, w, h)
-
-      if (currentIdx >= allSkillsSorted.length) {
+      if (allLanded) {
         setPhase('landed')
         return
       }
 
-      const skill = allSkillsSorted[currentIdx]
-      const target = getCardCenter(skill.category)
+      const w = canvas.width
+      const h = canvas.height
+      ctx.clearRect(0, 0, w, h)
 
-      if (impacting) {
-        impactTime += 0.05
-        const p = Math.min(impactTime, 1)
+      let remaining = 0
 
-        const ringRadius = 20 + 80 * p
-        const ringAlpha = (1 - p) * 0.8
-        ctx.beginPath()
-        ctx.arc(impactX, impactY, ringRadius, 0, Math.PI * 2)
-        ctx.strokeStyle = `rgba(255, 255, 255, ${ringAlpha})`
-        ctx.lineWidth = 3 * (1 - p)
-        ctx.stroke()
+      for (const a of asteroids) {
+        if (a.done) continue
+        remaining++
 
-        const flash = ctx.createRadialGradient(impactX, impactY, 0, impactX, impactY, 60)
-        flash.addColorStop(0, `rgba(255, 255, 255, ${(1 - p) * 0.6})`)
-        flash.addColorStop(1, 'rgba(255, 255, 255, 0)')
-        ctx.fillStyle = flash
-        ctx.beginPath()
-        ctx.arc(impactX, impactY, 60, 0, Math.PI * 2)
-        ctx.fill()
+        const target = getCardCenter(a.skill.category)
 
-        for (let i = 0; i < 12; i++) {
-          const angle = (i / 12) * Math.PI * 2 + p * 2
-          const dist = 10 + 60 * p * (0.5 + Math.random() * 0.5)
-          const px = impactX + Math.cos(angle) * dist
-          const py = impactY + Math.sin(angle) * dist
-          const pSize = 2 * (1 - p)
+        if (a.impacted) {
+          a.impactTime += 0.06
+          const p = Math.min(a.impactTime, 1)
+
+          const ringRadius = 20 + 80 * p
+          const ringAlpha = (1 - p) * 0.8
           ctx.beginPath()
-          ctx.arc(px, py, pSize, 0, Math.PI * 2)
-          ctx.fillStyle = `rgba(255, 255, 255, ${(1 - p) * 0.5})`
+          ctx.arc(a.impactX, a.impactY, ringRadius, 0, Math.PI * 2)
+          ctx.strokeStyle = `rgba(255, 255, 255, ${ringAlpha})`
+          ctx.lineWidth = 3 * (1 - p)
+          ctx.stroke()
+
+          const flash = ctx.createRadialGradient(a.impactX, a.impactY, 0, a.impactX, a.impactY, 60)
+          flash.addColorStop(0, `rgba(255, 255, 255, ${(1 - p) * 0.6})`)
+          flash.addColorStop(1, 'rgba(255, 255, 255, 0)')
+          ctx.fillStyle = flash
+          ctx.beginPath()
+          ctx.arc(a.impactX, a.impactY, 60, 0, Math.PI * 2)
           ctx.fill()
-        }
 
-        if (impactTime >= 1) {
-          impacting = false
-          waiting = true
-          setLandedSkills((prev) => new Set(prev).add(skill.name))
-          currentIdx++
-          if (currentIdx < allSkillsSorted.length) {
-            setTimeout(launchNext, 200)
+          for (let i = 0; i < 12; i++) {
+            const angle = (i / 12) * Math.PI * 2 + p * 2
+            const dist = 10 + 60 * p * (0.5 + Math.random() * 0.5)
+            const px = a.impactX + Math.cos(angle) * dist
+            const py = a.impactY + Math.sin(angle) * dist
+            const pSize = 2 * (1 - p)
+            ctx.beginPath()
+            ctx.arc(px, py, pSize, 0, Math.PI * 2)
+            ctx.fillStyle = `rgba(255, 255, 255, ${(1 - p) * 0.5})`
+            ctx.fill()
           }
+
+          if (a.impactTime >= 1) {
+            a.done = true
+            setLandedSkills((prev) => new Set(prev).add(a.skill.name))
+          }
+          continue
         }
 
-        animId = requestAnimationFrame(render)
-        return
-      }
+        a.z -= speed
+        a.rot += 0.03
 
-      if (!waiting) {
-        z -= speed
-        rot += 0.02
-
-        const zProgress = 1 - z / MAX_Z
+        const zProgress = 1 - a.z / MAX_Z
         const ease = 1 - Math.pow(1 - Math.min(zProgress, 1), 2)
 
-        const sx = startX + (target.x - startX) * ease
-        const sy = startY + (target.y - startY) * ease
-        const scale = FOV / (FOV + z)
-        const size = (12 + skill.level * 4) * scale
-        const alpha = Math.min(1, Math.max(0, 1 - z / MAX_Z))
+        const sx = a.startX + (target.x - a.startX) * ease
+        const sy = a.startY + (target.y - a.startY) * ease
+        const scale = FOV / (FOV + a.z)
+        const size = (12 + a.skill.level * 4) * scale
+        const alpha = Math.min(1, Math.max(0, 1 - a.z / MAX_Z))
 
-        trail.push({ x: sx, y: sy, size: size * 0.4, alpha })
-        if (trail.length > 40) trail.shift()
+        a.trail.push({ x: sx, y: sy, size: size * 0.4, alpha })
+        if (a.trail.length > 40) a.trail.shift()
 
-        for (let i = 0; i < trail.length; i++) {
-          const t = trail[i]
-          const tAlpha = (i / trail.length) * t.alpha * 0.6
+        for (let i = 0; i < a.trail.length; i++) {
+          const t = a.trail[i]
+          const tAlpha = (i / a.trail.length) * t.alpha * 0.6
           ctx.beginPath()
-          ctx.arc(t.x, t.y, t.size * (i / trail.length), 0, Math.PI * 2)
+          ctx.arc(t.x, t.y, t.size * (i / a.trail.length), 0, Math.PI * 2)
           ctx.fillStyle = `rgba(255, 255, 255, ${tAlpha})`
           ctx.fill()
         }
@@ -206,7 +218,7 @@ export function Skills() {
         ctx.save()
         ctx.translate(sx, sy)
         ctx.scale(scale, scale)
-        ctx.rotate(rot * 0.1)
+        ctx.rotate(a.rot * 0.1)
         ctx.globalAlpha = alpha
 
         const starGlow = ctx.createRadialGradient(0, 0, 0, 0, 0, size * 4)
@@ -223,19 +235,22 @@ export function Skills() {
 
         ctx.restore()
 
-        if (z <= 0) {
-          z = 0
-          impacting = true
-          impactTime = 0
-          impactX = target.x
-          impactY = target.y
+        if (a.z <= 0) {
+          a.z = 0
+          a.impacted = true
+          a.impactTime = 0
+          a.impactX = target.x
+          a.impactY = target.y
         }
+      }
+
+      if (remaining === 0) {
+        allLanded = true
       }
 
       animId = requestAnimationFrame(render)
     }
 
-    launchNext()
     render()
 
     return () => {
