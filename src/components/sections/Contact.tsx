@@ -14,7 +14,7 @@ export function Contact() {
   }, [i18n.language])
 
   useEffect(() => {
-    emailjs.init(import.meta.env.VITE_EMAILJS_PUBLIC_KEY)
+    emailjs.init({ publicKey: import.meta.env.VITE_EMAILJS_PUBLIC_KEY })
   }, [])
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -26,7 +26,6 @@ export function Contact() {
         import.meta.env.VITE_EMAILJS_SERVICE_ID,
         import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
         formRef.current,
-        { publicKey: import.meta.env.VITE_EMAILJS_PUBLIC_KEY },
       )
       .then(() => {
         setSent(true)
