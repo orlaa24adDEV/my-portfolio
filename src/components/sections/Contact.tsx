@@ -1,12 +1,13 @@
 import { useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import emailjs from '@emailjs/browser'
-import { personalInfo, socialLinks } from '../../data'
+import { personalInfo, socialLinks, resumes } from '../../data'
 
 export function Contact() {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
   const formRef = useRef<HTMLFormElement>(null)
   const [sent, setSent] = useState(false)
+  const [cvLang, setCvLang] = useState(i18n.language)
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
@@ -88,18 +89,27 @@ export function Contact() {
         </div>
       </div>
 
-      {personalInfo.resumeUrl && (
-        <div className="pt-4 border-t border-primary/20 text-center max-w-4xl w-full mt-10">
-          <p className="text-sm opacity-60 mb-3">{t('contact.cvText')}</p>
+      <div className="pt-4 border-t border-primary/20 text-center max-w-4xl w-full mt-10">
+        <p className="text-sm opacity-60 mb-3">{t('contact.cvText')}</p>
+        <div className="flex items-center justify-center gap-3">
+          <select
+            value={cvLang}
+            onChange={(e) => setCvLang(e.target.value)}
+            className="bg-transparent border border-primary/30 rounded-full px-4 py-2 text-sm text-white outline-none focus:border-primary transition-colors cursor-pointer"
+          >
+            <option value="es" className="bg-[#0a0a0f]">ES</option>
+            <option value="en" className="bg-[#0a0a0f]">EN</option>
+            <option value="de" className="bg-[#0a0a0f]">DE</option>
+          </select>
           <a
-            href={personalInfo.resumeUrl}
+            href={resumes[cvLang]}
             download
             className="inline-block border border-primary rounded-full px-8 py-3 text-base hover:bg-primary/10 transition-colors"
           >
             {t('contact.download')}
           </a>
         </div>
-      )}
+      </div>
     </section>
   )
 }
