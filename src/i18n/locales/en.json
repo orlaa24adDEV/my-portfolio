@@ -1,0 +1,45 @@
+{
+  "nav": {
+    "about": "About Me",
+    "projects": "Projects",
+    "skills": "Skills",
+    "contact": "Contact"
+  },
+  "hero": {
+    "title": "Full-Stack Developer",
+    "tagline": "Passionate about building and creating web applications with the intention of learning and improving every day.",
+    "cta": "Get to know me"
+  },
+  "about": {
+    "heading": "About Me",
+    "bio": "I'm Orlando, a Full-Stack developer focused on building complete and scalable web applications. With React and Node.js as the pillars of my stack, I've built personal projects you can find on my GitHub. I'm currently looking for an opportunity to keep growing, contribute from day one, and be part of a team to learn with.",
+    "location": "Elzach, Germany / Málaga, Spain"
+  },
+  "projects": {
+    "heading": "Projects",
+    "loading": "Loading projects...",
+    "live": "Live demo",
+    "source": "Source code"
+  },
+  "skills": {
+    "heading": "Skills",
+    "frontend": "Frontend",
+    "backend": "Backend",
+    "tools": "Tools",
+    "design": "Design"
+  },
+  "contact": {
+    "heading": "Contact",
+    "name": "Your name",
+    "email": "Your email",
+    "message": "Your message",
+    "send": "Send message",
+    "sent": "✓ Sent",
+    "error": "Error sending the message. Try again.",
+    "cvText": "You can download my CV here",
+    "download": "Download CV"
+  },
+  "footer": {
+    "copyright": "All rights reserved."
+  }
+}

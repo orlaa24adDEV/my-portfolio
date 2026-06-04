@@ -1,0 +1,45 @@
+{
+  "nav": {
+    "about": "Über mich",
+    "projects": "Projekte",
+    "skills": "Fähigkeiten",
+    "contact": "Kontakt"
+  },
+  "hero": {
+    "title": "Full-Stack-Entwickler",
+    "tagline": "Leidenschaftlich daran interessiert, Webanwendungen zu entwickeln und zu erstellen, mit dem Ziel, jeden Tag zu lernen und besser zu werden.",
+    "cta": "Lerne mich kennen"
+  },
+  "about": {
+    "heading": "Über mich",
+    "bio": "Ich bin Orlando, ein Full-Stack-Entwickler, der sich auf die Entwicklung vollständiger und skalierbarer Webanwendungen konzentriert. Mit React und Node.js als Grundlage meines Stacks habe ich eigene Projekte entwickelt, die du auf meinem GitHub finden kannst. Derzeit suche ich eine Möglichkeit, weiterzuwachsen, von Anfang an einen Beitrag zu leisten und Teil eines Teams zu sein, mit dem ich lernen kann.",
+    "location": "Elzach, Deutschland / Málaga, Spanien"
+  },
+  "projects": {
+    "heading": "Projekte",
+    "loading": "Projekte werden geladen...",
+    "live": "Live-Demo",
+    "source": "Quellcode"
+  },
+  "skills": {
+    "heading": "Fähigkeiten",
+    "frontend": "Frontend",
+    "backend": "Backend",
+    "tools": "Werkzeuge",
+    "design": "Design"
+  },
+  "contact": {
+    "heading": "Kontakt",
+    "name": "Dein Name",
+    "email": "Deine E-Mail",
+    "message": "Deine Nachricht",
+    "send": "Nachricht senden",
+    "sent": "✓ Gesendet",
+    "error": "Fehler beim Senden der Nachricht. Versuche es erneut.",
+    "cvText": "Hier kannst du meinen Lebenslauf herunterladen",
+    "download": "Lebenslauf herunterladen"
+  },
+  "footer": {
+    "copyright": "Alle Rechte vorbehalten."
+  }
+}

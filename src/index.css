@@ -1,0 +1,19 @@
+@import "https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap";
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #ff4d4d;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: #0a0a0f;
+  color: var(--color-primary);
+  font-family: 'JetBrains Mono', monospace;
+  text-shadow:
+    0 0 4px color-mix(in srgb, var(--color-primary) 60%, transparent),
+    0 0 12px color-mix(in srgb, var(--color-primary) 30%, transparent);
+}
