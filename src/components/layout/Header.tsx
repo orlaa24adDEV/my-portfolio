@@ -12,7 +12,7 @@ export function Header() {
           <a
             key={link.href}
             href={link.href}
-            className="text-primary text-sm sm:text-base transition-all duration-300 hover:drop-shadow-[0_0_6px_#ff4d4d] hover:brightness-125"
+            className="text-primary text-base transition-all duration-300 hover:drop-shadow-[0_0_6px_#ff4d4d] hover:brightness-125"
           >
             {t(`nav.${link.href.replace('#', '')}`)}
           </a>
