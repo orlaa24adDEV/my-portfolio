@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { navLinks } from '../../data'
 import { LanguageSwitcher } from '../ui/LanguageSwitcher'
@@ -6,6 +6,11 @@ import { LanguageSwitcher } from '../ui/LanguageSwitcher'
 export function Header() {
   const { t } = useTranslation()
   const [open, setOpen] = useState(false)
+
+  useEffect(() => {
+    document.body.style.overflow = open ? 'hidden' : ''
+    return () => { document.body.style.overflow = '' }
+  }, [open])
 
   return (
     <>
