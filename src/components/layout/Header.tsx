@@ -38,18 +38,20 @@ export function Header() {
       </div>
 
       {open && (
-        <div className="sm:hidden flex flex-col items-center gap-4 pb-6 pt-2 bg-[#0a0a0f]/95 backdrop-blur-sm">
+        <div className="fixed inset-0 top-16 sm:hidden flex flex-col items-center justify-center gap-8 bg-[#0a0a0f] z-40">
           {navLinks.map((link) => (
             <a
               key={link.href}
               href={link.href}
               onClick={() => setOpen(false)}
-              className="text-primary text-lg transition-all duration-300 hover:drop-shadow-[0_0_6px_#ff4d4d] hover:brightness-125"
+              className="text-primary text-2xl transition-all duration-300 hover:drop-shadow-[0_0_6px_#ff4d4d] hover:brightness-125"
             >
               {t(`nav.${link.href.replace('#', '')}`)}
             </a>
           ))}
-          <LanguageSwitcher />
+          <div className="mt-4">
+            <LanguageSwitcher />
+          </div>
         </div>
       )}
     </header>
