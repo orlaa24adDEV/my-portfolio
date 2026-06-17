@@ -22,20 +22,22 @@ export function Projects() {
             >
               <h3 className="text-xl font-semibold">{project.title}</h3>
 
-              <p className="text-sm opacity-80 leading-relaxed grow">{project.description}</p>
+              <div className="grow flex flex-col gap-4">
+                <p className="text-sm opacity-80 leading-relaxed">{project.description}</p>
 
-              <ul className="flex flex-wrap gap-2">
-                {project.technologies.map((tech) => (
-                  <li
-                    key={tech}
-                    className="text-xs px-2 py-1 border border-primary/30 rounded"
-                  >
-                    {tech}
-                  </li>
-                ))}
-              </ul>
+                <ul className="flex flex-wrap gap-2">
+                  {project.technologies.map((tech) => (
+                    <li
+                      key={tech}
+                      className="text-xs px-2 py-1 border border-primary/30 rounded"
+                    >
+                      {tech}
+                    </li>
+                  ))}
+                </ul>
+              </div>
 
-              <div className="flex flex-wrap gap-3 mt-auto">
+              <div className="flex flex-wrap gap-3">
                 {project.liveUrl && (
                   <a
                     href={project.liveUrl}
