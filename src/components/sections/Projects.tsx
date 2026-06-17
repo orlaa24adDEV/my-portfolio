@@ -20,10 +20,7 @@ export function Projects() {
               key={project.id}
               className="border border-primary/20 rounded-lg p-6 flex flex-col gap-4 hover:border-primary/60 transition-colors"
             >
-              <h3 className="text-xl font-semibold">{project.title}</h3>
-              <p className="text-sm opacity-80 leading-relaxed">{project.description}</p>
-
-              <ul className="flex flex-wrap gap-2 mt-auto">
+              <ul className="flex flex-wrap gap-2">
                 {project.technologies.map((tech) => (
                   <li
                     key={tech}
@@ -33,6 +30,9 @@ export function Projects() {
                   </li>
                 ))}
               </ul>
+
+              <h3 className="text-xl font-semibold">{project.title}</h3>
+              <p className="text-sm opacity-80 leading-relaxed">{project.description}</p>
 
               <div className="flex flex-wrap gap-3 pt-2">
                 {project.liveUrl && (
