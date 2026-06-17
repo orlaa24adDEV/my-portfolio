@@ -21,9 +21,11 @@ export function useGithubRepos(username: string) {
       .then((res) => res.json())
       .then((data: GithubRepo[]) => {
         const techOverrides: Record<string, string[]> = {
+          'find-your-pitch': ['React', 'TypeScript', 'Tailwind', 'HTML', 'Node.js', 'Express.js', 'Prisma ORM', 'PostgreSQL', 'Docker', 'Vite', 'Axios', 'JWT', 'Nodemailer', 'Vercel', 'Railway', 'GitHub Actions', 'Vitest', 'Jest+ts-test+supertest' ],
           'weather-app': ['React', 'TypeScript', 'Tailwind', 'HTML'],
           'my-portfolio': ['React', 'TypeScript', 'Tailwind', 'HTML'],
           'VisitasVirtuales': ['React', 'JavaScript', 'PostgreSQL', 'API Rest', 'Docker', 'Tailwind', 'HTML'],
+          'docker-practica-api': ['Docker', 'JavaScript', 'Railway'],
         }
 
         const urlOverrides: Record<string, string> = {
