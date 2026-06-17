@@ -41,6 +41,16 @@ export function useGithubRepos(username: string) {
             repoUrl: r.html_url,
             featured: true,
           }))
+
+        mapped.unshift({
+          id: '100-canios',
+          title: '100-caños',
+          description: 'Descubre 100 caños: Una experiencia de oleoturismo única en el corazón de Málaga',
+          technologies: ['React', 'Tailwind', 'HTML', 'Nodemailer', 'Node.js', 'Express.js', 'i18next'],
+          liveUrl: 'https://100canos.com/',
+          featured: true,
+        })
+
         setProjects(mapped)
       })
       .catch(() => setProjects([]))
