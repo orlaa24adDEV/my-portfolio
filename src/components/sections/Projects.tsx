@@ -20,6 +20,8 @@ export function Projects() {
               key={project.id}
               className="border border-primary/20 rounded-lg p-6 flex flex-col gap-4 hover:border-primary/60 transition-colors"
             >
+              <h3 className="text-xl font-semibold">{project.title}</h3>
+
               <ul className="flex flex-wrap gap-2">
                 {project.technologies.map((tech) => (
                   <li
@@ -31,10 +33,9 @@ export function Projects() {
                 ))}
               </ul>
 
-              <h3 className="text-xl font-semibold">{project.title}</h3>
-              <p className="text-sm opacity-80 leading-relaxed">{project.description}</p>
+              <p className="text-sm opacity-80 leading-relaxed grow">{project.description}</p>
 
-              <div className="flex flex-wrap gap-3 pt-2">
+              <div className="flex flex-wrap gap-3 mt-auto">
                 {project.liveUrl && (
                   <a
                     href={project.liveUrl}
