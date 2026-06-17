@@ -22,6 +22,8 @@ export function Projects() {
             >
               <h3 className="text-xl font-semibold">{project.title}</h3>
 
+              <p className="text-sm opacity-80 leading-relaxed grow">{project.description}</p>
+
               <ul className="flex flex-wrap gap-2">
                 {project.technologies.map((tech) => (
                   <li
@@ -32,8 +34,6 @@ export function Projects() {
                   </li>
                 ))}
               </ul>
-
-              <p className="text-sm opacity-80 leading-relaxed grow">{project.description}</p>
 
               <div className="flex flex-wrap gap-3 mt-auto">
                 {project.liveUrl && (
